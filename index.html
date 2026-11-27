@@ -21,9 +21,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
 
-  <!-- Supabase JS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
     :root {
       --accent: #8ab4f8;
@@ -594,7 +591,6 @@
     }
 
     .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
-    .pulse-dot.local { background: var(--warning); }
 
     .hero-search-wrap { width: 100%; max-width: 640px; position: relative; }
 
@@ -1185,7 +1181,7 @@
         </div>
 
         <div>
-          <div class="settings-group-title">Tabs & Cloud Sync</div>
+          <div class="settings-group-title">Tabs & Data</div>
           <div class="settings-card">
             <div class="settings-row">
               <div>
@@ -1193,13 +1189,6 @@
                 <div class="settings-row-sub">Open tabs stay saved when you close & reopen VinMeen</div>
               </div>
               <span class="cat-tag" id="settingsSavedTabsCount">0 Open Web Tabs</span>
-            </div>
-            <div class="settings-row">
-              <div>
-                <div class="settings-row-title">Cloud Metadata Sync</div>
-                <div class="settings-row-sub" id="settingsStorageMode">URLs stay local • Metadata syncs without URL</div>
-              </div>
-              <button type="button" class="pill-btn" id="settingsSyncNowBtn">Sync Now</button>
             </div>
             <div class="settings-row">
               <div>
@@ -1211,7 +1200,7 @@
             <div class="settings-row">
               <div>
                 <div class="settings-row-title" style="color:var(--danger);">Reset All Added Websites</div>
-                <div class="settings-row-sub">Removes all manually added websites from local storage</div>
+                <div class="settings-row-sub">Removes all manually added websites</div>
               </div>
               <button type="button" class="pill-btn danger" id="settingsResetSitesBtn">Reset All</button>
             </div>
@@ -1243,10 +1232,6 @@
             </div>
 
             <div class="status-row">
-              <div class="clock-pill">
-                <span class="pulse-dot" id="syncDot"></span>
-                <span id="syncStatusText">Local Storage Ready</span>
-              </div>
               <div class="clock-pill">
                 <span class="pulse-dot"></span>
                 <span id="liveClockText">Loading...</span>
@@ -1384,20 +1369,6 @@
 
   <script>
     (() => {
-      // ============================================================
-      // SUPABASE CLOUD CONFIG (URL is NEVER stored in Supabase)
-      // ============================================================
-      const SUPABASE_URL = 'https://vcigvxhzrslcllaouauv.supabase.co';
-      const SUPABASE_KEY = 'sb_publishable_vrwMGBS8HeK2uQUNKxi52g_OO7jCK3m';
-      const SUPABASE_TABLE = 'vinmeen_websites';
-
-      const sbClient = (
-        SUPABASE_URL.startsWith('https://') &&
-        SUPABASE_KEY.length > 20 &&
-        window.supabase &&
-        typeof window.supabase.createClient === 'function'
-      ) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-
       // Mobile PWA Manifest with VinMeen Browser Icon
       (function setupVinMeenManifest() {
         const iconSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='ring' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234285f4'/%3E%3Cstop offset='50%25' stop-color='%2334a853'/%3E%3Cstop offset='100%25' stop-color='%23fbbc05'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='115' fill='url(%23bg)'/%3E%3Ccircle cx='256' cy='256' r='150' fill='none' stroke='url(%23ring)' stroke-width='22'/%3E%3Cellipse cx='256' cy='256' rx='72' ry='150' fill='none' stroke='%238ab4f8' stroke-width='14'/%3E%3Cline x1='106' y1='256' x2='406' y2='256' stroke='%238ab4f8' stroke-width='14'/%3E%3Cpath fill='%23fbbc05' d='M364 114l16 32 32 16-32 16-16 32-16-32-32-16 32-16z'/%3E%3C/svg%3E";
@@ -1467,84 +1438,6 @@
         } catch {}
       }
 
-      function updateSyncBadge() {
-        if (sbClient) {
-          $('syncDot').classList.remove('local');
-          $('syncStatusText').textContent = 'Supabase Sync (No URL)';
-          $('settingsStorageMode').textContent = 'URLs kept local • Supabase syncs without URL';
-        } else {
-          $('syncDot').classList.add('local');
-          $('syncStatusText').textContent = 'Local Storage Ready';
-          $('settingsStorageMode').textContent = 'Local Storage Ready';
-        }
-      }
-
-      // Supabase Cloud Sync — URL is explicitly set to '' (never saved to Supabase)
-      async function pullWebsitesFromSupabase() {
-        if (!sbClient) return;
-        try {
-          const { data, error } = await sbClient
-            .from(SUPABASE_TABLE)
-            .select('id, name, icon, category, description, favorite, position')
-            .order('position', { ascending: true });
-
-          if (!error && Array.isArray(data)) {
-            const localUrlMap = new Map(websites.map(s => [String(s.id), s.url || '']));
-            websites = data.map(row => ({
-              id: String(row.id),
-              name: row.name || '',
-              url: localUrlMap.get(String(row.id)) || '',
-              icon: row.icon || '',
-              category: row.category || '',
-              description: row.description || '',
-              favorite: Boolean(row.favorite)
-            }));
-            persistSites();
-            refreshDashboard();
-          }
-        } catch {}
-      }
-
-      async function saveWebsiteToSupabase(site, posIndex = 0) {
-        if (!sbClient || !site) return;
-        try {
-          await sbClient.from(SUPABASE_TABLE).upsert({
-            id: site.id,
-            name: site.name,
-            url: '',
-            icon: site.icon || '',
-            category: site.category || '',
-            description: site.description || '',
-            favorite: Boolean(site.favorite),
-            position: posIndex
-          });
-        } catch {}
-      }
-
-      async function removeWebsiteFromSupabase(siteId) {
-        if (!sbClient || !siteId) return;
-        try {
-          await sbClient.from(SUPABASE_TABLE).delete().eq('id', siteId);
-        } catch {}
-      }
-
-      async function syncOrderToSupabase() {
-        if (!sbClient || websites.length === 0) return;
-        try {
-          const rows = websites.map((site, idx) => ({
-            id: site.id,
-            name: site.name,
-            url: '',
-            icon: site.icon || '',
-            category: site.category || '',
-            description: site.description || '',
-            favorite: Boolean(site.favorite),
-            position: idx
-          }));
-          await sbClient.from(SUPABASE_TABLE).upsert(rows);
-        } catch {}
-      }
-
       function escapeHtml(value) {
         const div = document.createElement('div');
         div.textContent = value ?? '';
@@ -1553,7 +1446,7 @@
 
       function extractDomain(url) {
         try { return new URL(url).hostname.replace(/^www\./, ''); }
-        catch { return url || 'Saved locally'; }
+        catch { return url || 'Saved'; }
       }
 
       function buildFaviconUrl(url) {
@@ -1758,7 +1651,6 @@
 
       $('btnReload').addEventListener('click', () => {
         if (activeTabId === 'home') {
-          pullWebsitesFromSupabase();
           refreshDashboard();
           notify('Refreshed');
           return;
@@ -1894,11 +1786,13 @@
         $('pinModal').classList.add('open');
       });
 
-      $('settingsSyncNowBtn').addEventListener('click', () => {
-        pullWebsitesFromSupabase();
-        syncOrderToSupabase();
-        refreshDashboard();
-        notify('Synced');
+      $('menuPinLock').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
+        const hasPin = Boolean(getSavedPin());
+        $('pinField').value = '';
+        $('btnRemovePin').style.display = hasPin ? 'inline-flex' : 'none';
+        $('btnLockNow').style.display = hasPin ? 'inline-flex' : 'none';
+        $('pinModal').classList.add('open');
       });
 
       $('settingsClearRecentBtn').addEventListener('click', () => {
@@ -2100,8 +1994,6 @@
             if (!site) return;
             site.favorite = !site.favorite;
             persistSites();
-            const pos = websites.findIndex(s => s.id === id);
-            saveWebsiteToSupabase(site, pos);
             refreshDashboard();
             notify(site.favorite ? 'Added to Bookmarks' : 'Removed from Bookmarks');
           });
@@ -2153,7 +2045,6 @@
               const [movedItem] = websites.splice(fromIndex, 1);
               websites.splice(toIndex, 0, movedItem);
               persistSites();
-              syncOrderToSupabase();
               refreshDashboard();
               notify('Order saved');
             }
@@ -2239,8 +2130,6 @@
           const target = websites.find(s => s.id === id);
           if (target) {
             Object.assign(target, { name, url, icon, category, description });
-            const pos = websites.findIndex(s => s.id === id);
-            saveWebsiteToSupabase(target, pos);
           }
           notify(`Updated "${name}"`);
         } else {
@@ -2249,7 +2138,6 @@
             name, url, icon, category, description, favorite: false
           };
           websites.unshift(newSite);
-          saveWebsiteToSupabase(newSite, 0);
           notify(`Added "${name}"`);
         }
 
@@ -2267,7 +2155,6 @@
         recentVisits = recentVisits.filter(r => r.siteId !== targetId);
         persistSites();
         persistRecent();
-        removeWebsiteFromSupabase(targetId);
         deleteTargetId = null;
         $('deleteModal').classList.remove('open');
         refreshDashboard();
@@ -2359,13 +2246,11 @@
 
       // Boot VinMeen
       applyTheme(localStorage.getItem(STORAGE.THEME) || 'dark');
-      updateSyncBadge();
       tickLiveClock();
       setInterval(tickLiveClock, 1000);
       refreshDashboard();
       restorePersistedTabs();
       syncSettingsPageUI();
-      pullWebsitesFromSupabase();
 
       if (getSavedPin()) {
         activateLockScreen();
