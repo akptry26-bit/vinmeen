@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>VinMeen — Personal Browser & Command Center</title>
+  <title>VinMeen</title>
 
   <!-- Mobile Home Screen App Meta Tags -->
   <meta name="application-name" content="VinMeen" />
@@ -11,7 +11,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#13151a" />
+  <meta name="theme-color" content="#1f2024" />
 
   <!-- VinMeen App Icon -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='star' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbc05'/%3E%3Cstop offset='50%25' stop-color='%234285f4'/%3E%3Cstop offset='100%25' stop-color='%2334a853'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='115' fill='url(%23bg)'/%3E%3Cpath fill='url(%23star)' d='M256 96l42 118 118 42-118 42-42 118-42-118-118-42 118-42z'/%3E%3Ccircle cx='366' cy='146' r='18' fill='%23ea4335'/%3E%3C/svg%3E" />
@@ -19,67 +19,74 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
     :root {
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --accent-soft: rgba(59, 130, 246, 0.16);
-      --accent-glow: rgba(59, 130, 246, 0.36);
+      --accent: #8ab4f8;
+      --accent-solid: #4285f4;
+      --accent-soft: rgba(138, 180, 248, 0.16);
+      --accent-glow: rgba(138, 180, 248, 0.34);
 
-      --bg-frame: #111318;
-      --bg-toolbar: #1b1f27;
-      --bg-omnibox: #111318;
-      --bg-tab-inactive: #111318;
-      --bg-tab-hover: #232834;
-      --bg-viewport: #151820;
-      --bg-card: #1d222c;
-      --bg-card-hover: #252b38;
-      --bg-elevated: #272d3b;
+      --cm-header: #1f2024;
+      --cm-pill: #303134;
+      --cm-pill-focus: #35363a;
+      --cm-bg: #17181c;
+      --cm-card: #242529;
+      --cm-card-hover: #2c2d32;
+      --cm-menu: #292a2d;
 
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(255, 255, 255, 0.16);
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.18);
 
-      --text-primary: #f8fafc;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
+      --text-primary: #e8eaed;
+      --text-secondary: #9aa0a6;
+      --text-muted: #757a80;
 
-      --danger: #ef4444;
-      --danger-soft: rgba(239, 68, 68, 0.16);
-      --warning: #f59e0b;
-      --warning-soft: rgba(245, 158, 11, 0.16);
-      --success: #10b981;
+      --danger: #f28b82;
+      --danger-soft: rgba(242, 139, 130, 0.16);
+      --warning: #fdd663;
+      --success: #81c995;
 
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.25);
-      --shadow-md: 0 12px 28px -6px rgba(0, 0, 0, 0.48);
-      --shadow-lg: 0 24px 60px -12px rgba(0, 0, 0, 0.72);
-
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.28);
+      --shadow-md: 0 10px 24px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.7);
       --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
       --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     [data-theme="light"] {
-      --bg-frame: #e2e8f0;
-      --bg-toolbar: #ffffff;
-      --bg-omnibox: #f1f5f9;
-      --bg-tab-inactive: #e2e8f0;
-      --bg-tab-hover: #cbd5e1;
-      --bg-viewport: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f1f5f9;
-      --bg-elevated: #e2e8f0;
+      --accent: #1a73e8;
+      --accent-solid: #1a73e8;
+      --accent-soft: rgba(26, 115, 232, 0.12);
+      --accent-glow: rgba(26, 115, 232, 0.28);
 
-      --border-subtle: rgba(15, 23, 42, 0.08);
-      --border-strong: rgba(15, 23, 42, 0.16);
+      --cm-header: #ffffff;
+      --cm-pill: #f1f3f4;
+      --cm-pill-focus: #e8eaed;
+      --cm-bg: #ffffff;
+      --cm-card: #f8f9fa;
+      --cm-card-hover: #f1f3f4;
+      --cm-menu: #ffffff;
 
-      --text-primary: #0f172a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
+      --border-subtle: rgba(0, 0, 0, 0.08);
+      --border-strong: rgba(0, 0, 0, 0.16);
 
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.12);
-      --shadow-lg: 0 24px 50px -12px rgba(15, 23, 42, 0.2);
+      --text-primary: #202124;
+      --text-secondary: #5f6368;
+      --text-muted: #80868b;
+
+      --danger: #d93025;
+      --danger-soft: rgba(217, 48, 37, 0.12);
+      --warning: #f9ab00;
+      --success: #1e8e3e;
+
+      --shadow-sm: 0 2px 6px rgba(60, 64, 67, 0.1);
+      --shadow-md: 0 10px 24px rgba(60, 64, 67, 0.15);
+      --shadow-lg: 0 20px 48px rgba(60, 64, 67, 0.25);
     }
 
     * {
@@ -90,8 +97,8 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-viewport);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--cm-bg);
       color: var(--text-primary);
       height: 100vh;
       height: 100dvh;
@@ -99,10 +106,10 @@
       flex-direction: column;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
-      transition: background-color 0.25s ease, color 0.25s ease;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    h1, h2, h3, h4, .brand-font {
+    h1, h2, h3, .brand-font {
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
@@ -111,221 +118,33 @@
     ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 99px; }
 
     /* ============================================================
-       PIN LOCK OVERLAY
+       CHROME HEADER (MOBILE + SYSTEM RESPONSIVE)
        ============================================================ */
-    .lock-overlay {
-      position: fixed;
-      inset: 0;
-      background: var(--bg-frame);
-      z-index: 9999;
-      display: none;
-      place-items: center;
-      padding: 20px;
-      animation: fadeIn 0.22s ease;
-    }
-
-    .lock-overlay.active { display: grid; }
-
-    .lock-card {
-      background: var(--bg-toolbar);
-      border: 1px solid var(--border-subtle);
-      border-radius: 24px;
-      padding: 34px 26px;
-      width: 100%;
-      max-width: 350px;
-      text-align: center;
-      box-shadow: var(--shadow-lg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 18px;
-      animation: modalPop 0.3s var(--ease-spring);
-    }
-
-    .lock-icon-wrap {
-      width: 58px;
+    .chrome-header {
       height: 58px;
-      border-radius: 18px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      display: grid;
-      place-items: center;
-      box-shadow: 0 8px 20px var(--accent-soft);
-    }
-
-    .pin-dots { display: flex; gap: 14px; margin: 4px 0; }
-
-    .pin-dot {
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 2px solid var(--text-muted);
-      transition: all 0.16s var(--ease-spring);
-    }
-
-    .pin-dot.filled {
-      background: var(--accent);
-      border-color: var(--accent);
-      transform: scale(1.22);
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    .pin-dot.error {
-      background: var(--danger);
-      border-color: var(--danger);
-      animation: shake 0.32s ease;
-    }
-
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      width: 100%;
-    }
-
-    .key-btn {
-      height: 50px;
-      border-radius: 14px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-card);
-      color: var(--text-primary);
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.16s var(--ease-out);
-    }
-
-    .key-btn:hover {
-      background: var(--accent-soft);
-      border-color: var(--accent);
-      color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .key-btn:active { transform: scale(0.94); }
-
-    /* ============================================================
-       1. VINMEEN TAB STRIP
-       ============================================================ */
-    .vinmeen-tab-strip {
-      background: var(--bg-frame);
-      height: 44px;
-      padding: 6px 14px 0;
-      display: flex;
-      align-items: flex-end;
-      gap: 5px;
-      overflow-x: auto;
-      flex-shrink: 0;
-      user-select: none;
-    }
-
-    .vm-tab {
-      height: 38px;
-      min-width: 132px;
-      max-width: 215px;
-      padding: 0 12px;
-      border-radius: 12px 12px 0 0;
-      background: var(--bg-tab-inactive);
-      color: var(--text-secondary);
-      font-size: 12.5px;
-      font-weight: 500;
+      padding: 8px 12px;
+      background: var(--cm-header);
+      border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       gap: 8px;
-      cursor: pointer;
-      position: relative;
-      transition: background 0.16s ease, color 0.16s ease;
       flex-shrink: 0;
-      animation: tabIn 0.2s var(--ease-out);
+      z-index: 40;
+      box-shadow: var(--shadow-sm);
     }
 
-    .vm-tab.home-tab { min-width: 130px; max-width: 150px; }
-    .vm-tab:hover:not(.active) { background: var(--bg-tab-hover); color: var(--text-primary); }
-    .vm-tab.active {
-      background: var(--bg-toolbar);
-      color: var(--text-primary);
-      font-weight: 600;
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    .vm-tab.active::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 12px;
-      right: 12px;
-      height: 2px;
-      background: var(--accent);
-      border-radius: 99px;
-    }
-
-    .tab-icon {
-      width: 16px;
-      height: 16px;
-      border-radius: 4px;
-      display: grid;
-      place-items: center;
-      font-size: 12px;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .tab-icon img { width: 100%; height: 100%; object-fit: cover; }
-
-    .tab-title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-    .tab-close-btn {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      cursor: pointer;
-      transition: all 0.14s ease;
-    }
-    .tab-close-btn:hover { background: var(--danger-soft); color: var(--danger); }
-
-    .new-tab-btn {
-      width: 30px;
-      height: 30px;
-      margin-bottom: 4px;
-      margin-left: 2px;
-      border-radius: 50%;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      display: grid;
-      place-items: center;
-      font-size: 18px;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.2s var(--ease-out);
-    }
-    .new-tab-btn:hover { background: var(--bg-tab-hover); color: var(--text-primary); transform: rotate(90deg); }
-
-    /* ============================================================
-       2. VINMEEN TOOLBAR & OMNIBOX
-       ============================================================ */
-    .vinmeen-toolbar {
-      background: var(--bg-toolbar);
-      height: 52px;
-      padding: 0 14px;
+    .header-inner {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
       display: flex;
       align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid var(--border-subtle);
-      flex-shrink: 0;
-      z-index: 20;
+      gap: 8px;
     }
 
-    .nav-group { display: flex; align-items: center; gap: 3px; }
-
-    .icon-round-btn {
-      width: 34px;
-      height: 34px;
+    .cm-btn {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       border: none;
       background: transparent;
@@ -333,32 +152,33 @@
       display: grid;
       place-items: center;
       cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.14s ease, color 0.14s ease, transform 0.14s var(--ease-out);
+    }
+    .cm-btn:hover { background: var(--cm-pill); color: var(--text-primary); }
+    .cm-btn:active { transform: scale(0.92); }
+    .cm-btn.active { background: var(--accent-soft); color: var(--accent); }
+
+    .cm-address-pill {
+      flex: 1;
+      height: 40px;
+      background: var(--cm-pill);
+      border: 1.5px solid transparent;
+      border-radius: 999px;
+      padding: 0 10px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
       transition: all 0.16s var(--ease-out);
     }
-    .icon-round-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
-    .icon-round-btn:active { transform: scale(0.92); }
-    .icon-round-btn.active { background: var(--accent-soft); color: var(--accent); }
-
-    .omnibox-form {
-      flex: 1;
-      height: 36px;
-      background: var(--bg-omnibox);
-      border: 1.5px solid var(--border-subtle);
-      border-radius: 999px;
-      padding: 0 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      transition: all 0.2s var(--ease-out);
-    }
-    .omnibox-form:focus-within {
-      background: var(--bg-toolbar);
+    .cm-address-pill:focus-within {
+      background: var(--cm-pill-focus);
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
-    .omnibox-input {
+    .cm-address-input {
       flex: 1;
       min-width: 0;
       border: none;
@@ -368,43 +188,185 @@
       font-size: 13.5px;
       outline: none;
     }
-    .omnibox-input::placeholder { color: var(--text-muted); }
+    .cm-address-input::placeholder { color: var(--text-secondary); }
 
-    .toolbar-right { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+    .cm-reload-mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .cm-reload-mini:hover { color: var(--text-primary); background: rgba(255, 255, 255, 0.08); }
 
-    .pill-btn {
-      height: 34px;
-      padding: 0 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border-subtle);
-      background: var(--bg-card);
+    .cm-tab-counter {
+      width: 24px;
+      height: 24px;
+      border-radius: 7px;
+      border: 1.8px solid var(--text-primary);
+      background: transparent;
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 800;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0 2px;
+      transition: transform 0.14s var(--ease-spring);
+    }
+    .cm-tab-counter:active { transform: scale(0.9); }
+
+    /* Three-Dot Menu */
+    .cm-dropdown {
+      position: fixed;
+      top: 62px;
+      right: 14px;
+      width: 220px;
+      background: var(--cm-menu);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 6px;
+      box-shadow: var(--shadow-lg);
+      z-index: 250;
+      display: none;
+      flex-direction: column;
+      gap: 2px;
+      animation: menuPop 0.16s var(--ease-out);
+    }
+    .cm-dropdown.open { display: flex; }
+
+    .cm-menu-item {
+      padding: 10px 12px;
+      border-radius: 11px;
+      border: none;
+      background: transparent;
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 12.5px;
-      font-weight: 600;
-      display: inline-flex;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
       cursor: pointer;
-      transition: all 0.18s var(--ease-out);
-      white-space: nowrap;
+      text-align: left;
     }
-    .pill-btn:hover { background: var(--bg-card-hover); border-color: var(--accent); transform: translateY(-1px); }
-    .pill-btn.primary {
-      background: var(--accent);
-      color: #ffffff;
-      border-color: transparent;
-      box-shadow: 0 4px 12px var(--accent-glow);
+    .cm-menu-item:hover { background: var(--cm-pill); }
+
+    .cm-menu-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 6px;
     }
-    .pill-btn.primary:hover { background: var(--accent-hover); }
 
     /* ============================================================
-       3. BOOKMARKS BAR
+       TAB SWITCHER OVERLAY
+       ============================================================ */
+    .tab-switcher-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--cm-bg);
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      animation: fadeIn 0.16s ease;
+    }
+    .tab-switcher-overlay.open { display: flex; }
+
+    .switcher-top {
+      height: 58px;
+      padding: 0 16px;
+      background: var(--cm-header);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .switcher-grid {
+      flex: 1;
+      overflow-y: auto;
+      padding: 18px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 14px;
+      align-content: start;
+    }
+
+    .switcher-card {
+      background: var(--cm-card);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.16s var(--ease-out);
+    }
+    .switcher-card.active-tab { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+    .switcher-card:hover { transform: translateY(-2px); }
+
+    .switcher-card-head {
+      padding: 9px 10px;
+      background: rgba(0, 0, 0, 0.18);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .switcher-preview {
+      height: 92px;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      color: var(--accent);
+      background: var(--cm-pill);
+    }
+    .switcher-preview img { width: 36px; height: 36px; object-fit: contain; }
+
+    .tab-close-mini {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .tab-close-mini:hover { background: var(--danger-soft); color: var(--danger); }
+
+    .switcher-bottom-bar {
+      height: 56px;
+      padding: 0 16px;
+      background: var(--cm-header);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ============================================================
+       BOOKMARKS STRIP (FAVORITES)
        ============================================================ */
     .bookmarks-bar {
-      background: var(--bg-toolbar);
-      min-height: 36px;
-      padding: 4px 14px;
+      background: var(--cm-header);
+      min-height: 35px;
+      padding: 3px 14px;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
@@ -414,35 +376,35 @@
     }
     .bookmarks-bar.hidden { display: none; }
 
-    .bookmark-pill {
+    .bookmark-chip {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      height: 26px;
+      gap: 6px;
+      height: 25px;
       padding: 0 11px;
       border-radius: 999px;
+      background: var(--cm-pill);
+      color: var(--text-secondary);
       font-size: 12px;
       font-weight: 500;
-      color: var(--text-secondary);
       cursor: pointer;
       white-space: nowrap;
-      transition: all 0.15s ease;
     }
-    .bookmark-pill:hover { background: var(--bg-card-hover); color: var(--text-primary); transform: translateY(-1px); }
+    .bookmark-chip:hover { color: var(--text-primary); }
 
-    .bookmark-icon {
-      width: 15px;
-      height: 15px;
-      border-radius: 4px;
+    .bookmark-fav {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
       display: grid;
       place-items: center;
-      font-size: 11px;
+      font-size: 10px;
       overflow: hidden;
     }
-    .bookmark-icon img { width: 100%; height: 100%; object-fit: cover; }
+    .bookmark-fav img { width: 100%; height: 100%; object-fit: cover; }
 
     /* ============================================================
-       4. VIEWPORT & SPLIT SCREEN
+       VIEWPORT & SPLIT VIEW
        ============================================================ */
     .viewport-shell { flex: 1; display: flex; position: relative; overflow: hidden; }
     .primary-pane { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; overflow: hidden; }
@@ -454,32 +416,31 @@
       min-width: 0;
       border-left: 2px solid var(--accent);
       background: #ffffff;
-      animation: fadeIn 0.2s ease;
     }
     .viewport-shell.split-active .secondary-pane { display: flex; }
 
     .split-header {
-      background: var(--bg-toolbar);
+      background: var(--cm-header);
       color: var(--text-primary);
-      height: 38px;
-      padding: 0 14px;
+      height: 36px;
+      padding: 0 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
+      gap: 8px;
       font-size: 12px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
     .split-select {
-      background: var(--bg-omnibox);
+      background: var(--cm-pill);
       color: var(--text-primary);
       border: 1px solid var(--border-subtle);
       border-radius: 999px;
-      padding: 4px 12px;
+      padding: 3px 12px;
       font-size: 12px;
       outline: none;
-      max-width: 240px;
+      max-width: 220px;
     }
 
     .web-iframe {
@@ -488,28 +449,16 @@
       border: none;
       background: #ffffff;
       display: none;
+      flex: 1;
     }
-
-    .frame-banner {
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      font-size: 11.5px;
-      padding: 6px 14px;
-      border-bottom: 1px solid var(--border-subtle);
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-    .frame-banner.show { display: flex; }
 
     /* ============================================================
-       5. VINMEEN DASHBOARD (NEW TAB VIEW)
+       VINMEEN HOME DASHBOARD (MOBILE + SYSTEM RESPONSIVE)
        ============================================================ */
     .dashboard-scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 34px 20px 64px;
+      padding: 32px 18px 64px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -517,7 +466,7 @@
 
     .dashboard-inner {
       width: 100%;
-      max-width: 1160px;
+      max-width: 1220px;
       display: flex;
       flex-direction: column;
       gap: 28px;
@@ -529,11 +478,11 @@
       align-items: center;
       text-align: center;
       gap: 14px;
-      animation: fadeDown 0.35s var(--ease-out);
+      animation: fadeDown 0.3s var(--ease-out);
     }
 
     .vinmeen-logo-text {
-      font-size: 46px;
+      font-size: clamp(36px, 6vw, 52px);
       font-weight: 800;
       letter-spacing: -0.03em;
       display: flex;
@@ -547,72 +496,74 @@
     .c-green { color: #34a853; }
 
     .star-spin {
-      font-size: 32px;
+      font-size: clamp(26px, 4vw, 34px);
       margin-right: 6px;
-      animation: floatStar 3.2s infinite ease-in-out;
+      animation: floatStar 3s infinite ease-in-out;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .clock-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 13px;
+      gap: 7px;
+      font-size: 12.5px;
       font-weight: 500;
       color: var(--text-secondary);
-      background: var(--bg-card);
+      background: var(--cm-card);
       border: 1px solid var(--border-subtle);
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 999px;
-      box-shadow: var(--shadow-sm);
     }
 
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 8px var(--success);
-    }
+    .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); }
+    .pulse-dot.local { background: var(--warning); }
 
-    .hero-search-wrap { width: 100%; max-width: 620px; position: relative; }
+    .hero-search-wrap { width: 100%; max-width: 640px; position: relative; }
 
     .hero-search-input {
       width: 100%;
       height: 48px;
       border-radius: 999px;
-      background: var(--bg-card);
-      border: 1.5px solid var(--border-subtle);
-      padding: 0 46px 0 48px;
+      background: var(--cm-pill);
+      border: 1.5px solid transparent;
+      padding: 0 44px 0 46px;
       color: var(--text-primary);
       font-family: inherit;
-      font-size: 14.5px;
+      font-size: 14px;
       outline: none;
-      box-shadow: var(--shadow-md);
-      transition: all 0.2s var(--ease-out);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.16s var(--ease-out);
     }
     .hero-search-input:focus {
-      background: var(--bg-toolbar);
+      background: var(--cm-header);
       border-color: var(--accent);
-      box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow-md);
+      box-shadow: 0 0 0 3px var(--accent-soft);
     }
 
     .hero-search-icon {
       position: absolute;
-      left: 18px;
+      left: 16px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-muted);
+      color: var(--text-secondary);
       pointer-events: none;
     }
 
     .hero-search-clear {
       position: absolute;
-      right: 14px;
+      right: 12px;
       top: 50%;
       transform: translateY(-50%);
       background: none;
       border: none;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       cursor: pointer;
       display: none;
       font-size: 14px;
@@ -620,51 +571,49 @@
     }
 
     /* Recently Visited */
-    .recent-section { display: flex; flex-direction: column; gap: 10px; animation: fadeUp 0.3s var(--ease-out); }
-
+    .recent-section { display: flex; flex-direction: column; gap: 8px; }
     .section-top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--text-secondary);
     }
 
-    .recent-strip { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+    .recent-strip { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
 
     .recent-tile {
-      width: 94px;
-      padding: 12px 8px;
+      width: 90px;
+      padding: 10px 6px;
       border-radius: 16px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       cursor: pointer;
-      transition: all 0.18s var(--ease-out);
+      transition: transform 0.16s var(--ease-out), background 0.16s ease;
       flex-shrink: 0;
     }
-    .recent-tile:hover { background: var(--bg-card); transform: translateY(-3px); }
+    .recent-tile:hover { background: var(--cm-card); transform: translateY(-2px); }
 
     .recent-circle {
-      width: 48px;
-      height: 48px;
+      width: 46px;
+      height: 46px;
       border-radius: 50%;
-      background: var(--bg-card);
+      background: var(--cm-card);
       border: 1px solid var(--border-subtle);
       display: grid;
       place-items: center;
       font-size: 18px;
       overflow: hidden;
-      box-shadow: var(--shadow-sm);
     }
     .recent-circle img { width: 24px; height: 24px; object-fit: contain; }
 
     .recent-name {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 500;
       color: var(--text-primary);
       text-align: center;
@@ -674,82 +623,72 @@
       text-overflow: ellipsis;
     }
 
-    /* Filter Chips */
-    .filter-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-    .chips-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    /* Filters */
+    .filter-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .chips-group { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
 
     .chip-btn {
       height: 32px;
-      padding: 0 15px;
+      padding: 0 14px;
       border-radius: 999px;
-      background: var(--bg-card);
+      background: var(--cm-card);
       border: 1px solid var(--border-subtle);
       color: var(--text-secondary);
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.18s var(--ease-out);
+      transition: all 0.15s ease;
     }
-    .chip-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
-    .chip-btn.active {
-      background: var(--accent-soft);
-      color: var(--accent);
-      border-color: var(--accent);
-      font-weight: 600;
-    }
+    .chip-btn:hover { background: var(--cm-card-hover); color: var(--text-primary); }
+    .chip-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); font-weight: 600; }
 
     /* Websites Grid & Cards */
     .websites-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 16px;
     }
 
     .site-card {
-      background: var(--bg-card);
+      background: var(--cm-card);
       border: 1px solid var(--border-subtle);
       border-radius: 18px;
-      padding: 18px;
+      padding: 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 14px;
-      transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out), border-color 0.2s ease, background-color 0.2s ease;
+      gap: 12px;
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out), border-color 0.18s ease, background-color 0.18s ease;
       cursor: grab;
-      animation: cardPopIn 0.28s var(--ease-out) backwards;
+      animation: cardPopIn 0.24s var(--ease-out) backwards;
     }
-    .site-card:hover {
-      background: var(--bg-card-hover);
-      border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
+    .site-card:hover { background: var(--cm-card-hover); border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .site-card:active { cursor: grabbing; }
     .site-card.dragging { opacity: 0.45; border-style: dashed; border-color: var(--accent); }
-    .site-card.drag-over { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); transform: scale(1.02); }
+    .site-card.drag-over { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
 
     .card-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-    .card-brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .card-brand { display: flex; align-items: center; gap: 11px; min-width: 0; }
 
     .card-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 13px;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
       background: var(--accent-soft);
       color: var(--accent);
       display: grid;
       place-items: center;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       flex-shrink: 0;
       overflow: hidden;
       border: 1px solid var(--border-subtle);
     }
-    .card-avatar img { width: 24px; height: 24px; object-fit: contain; }
+    .card-avatar img { width: 22px; height: 22px; object-fit: contain; }
 
     .card-meta { min-width: 0; }
-    .card-name { font-size: 15.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-domain { font-size: 12px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-name { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-domain { font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     .card-tools { display: flex; align-items: center; gap: 2px; }
     .card-tool-btn {
@@ -762,41 +701,40 @@
       display: grid;
       place-items: center;
       cursor: pointer;
-      transition: all 0.15s var(--ease-spring);
     }
-    .card-tool-btn:hover { background: var(--border-subtle); color: var(--text-primary); transform: scale(1.1); }
+    .card-tool-btn:hover { background: var(--cm-pill); color: var(--text-primary); }
     .card-tool-btn.fav-active { color: var(--warning); }
     .card-tool-btn.delete-btn:hover { background: var(--danger-soft); color: var(--danger); }
 
     .card-desc {
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--text-secondary);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      min-height: 38px;
+      min-height: 36px;
     }
 
     .card-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 12px;
+      padding-top: 10px;
       border-top: 1px solid var(--border-subtle);
     }
 
     .cat-tag {
       font-size: 11px;
       font-weight: 600;
-      padding: 4px 10px;
+      padding: 3px 10px;
       border-radius: 999px;
-      background: var(--bg-omnibox);
+      background: var(--cm-pill);
       color: var(--text-secondary);
     }
 
     .open-in-btn {
-      height: 31px;
+      height: 30px;
       padding: 0 14px;
       border-radius: 999px;
       border: none;
@@ -805,162 +743,203 @@
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.16s ease;
+      transition: all 0.14s ease;
     }
-    .open-in-btn:hover { background: var(--accent); color: #ffffff; }
+    .open-in-btn:hover { background: var(--accent-solid); color: #ffffff; }
 
     /* Empty State */
     .empty-state {
-      background: var(--bg-card);
+      background: var(--cm-card);
       border: 1.5px dashed var(--border-strong);
-      border-radius: 22px;
-      padding: 56px 22px;
+      border-radius: 20px;
+      padding: 50px 20px;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 14px;
-      animation: fadeUp 0.3s var(--ease-out);
+      gap: 12px;
     }
 
     .empty-badge {
-      width: 66px;
-      height: 66px;
+      width: 62px;
+      height: 62px;
       border-radius: 50%;
       background: var(--accent-soft);
       color: var(--accent);
       display: grid;
       place-items: center;
-      font-size: 30px;
-      box-shadow: 0 8px 24px var(--accent-soft);
+      font-size: 28px;
     }
 
-    /* ============================================================
-       MODALS & TOASTS
-       ============================================================ */
+    .pill-btn {
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--cm-pill);
+      color: var(--text-primary);
+      font-family: inherit;
+      font-size: 12.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+    .pill-btn.primary { background: var(--accent-solid); color: #ffffff; border: none; }
+
+    /* PIN Lock & Modals */
+    .lock-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--cm-header);
+      z-index: 9999;
+      display: none;
+      place-items: center;
+      padding: 20px;
+    }
+    .lock-overlay.active { display: grid; }
+
+    .lock-card {
+      background: var(--cm-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px;
+      padding: 32px 24px;
+      width: 100%;
+      max-width: 340px;
+      text-align: center;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .pin-dots { display: flex; gap: 12px; }
+    .pin-dot { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--text-muted); }
+    .pin-dot.filled { background: var(--accent-solid); border-color: var(--accent-solid); }
+    .pin-dot.error { background: var(--danger); border-color: var(--danger); animation: shake 0.3s ease; }
+
+    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+    .key-btn {
+      height: 48px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: var(--cm-pill);
+      color: var(--text-primary);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
     .modal-backdrop {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(4px);
       display: none;
       place-items: center;
       padding: 16px;
       z-index: 600;
     }
-    .modal-backdrop.open { display: grid; animation: fadeIn 0.18s ease; }
+    .modal-backdrop.open { display: grid; animation: fadeIn 0.16s ease; }
 
     .modal-box {
-      background: var(--bg-toolbar);
-      border: 1px solid var(--border-subtle);
+      background: var(--cm-menu);
+      border: 1px solid var(--border-strong);
       border-radius: 22px;
       width: 100%;
-      max-width: 460px;
+      max-width: 440px;
       box-shadow: var(--shadow-lg);
       overflow: hidden;
-      animation: modalPop 0.25s var(--ease-spring);
+      animation: modalPop 0.22s var(--ease-spring);
     }
 
     .modal-header {
-      padding: 18px 22px;
+      padding: 16px 20px;
       border-bottom: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .modal-body { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
-    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-field { display: flex; flex-direction: column; gap: 5px; }
+    .modal-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
     .form-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
 
     .form-input {
       width: 100%;
-      padding: 10px 13px;
-      border-radius: 11px;
+      padding: 9px 12px;
+      border-radius: 10px;
       border: 1.5px solid var(--border-subtle);
-      background: var(--bg-omnibox);
+      background: var(--cm-pill);
       color: var(--text-primary);
       font-family: inherit;
       font-size: 13.5px;
       outline: none;
-      transition: border-color 0.18s ease;
     }
     .form-input:focus { border-color: var(--accent); }
 
     .modal-footer {
-      padding: 14px 22px;
+      padding: 12px 20px;
       border-top: 1px solid var(--border-subtle);
       display: flex;
       justify-content: flex-end;
       gap: 8px;
-      background: var(--bg-card);
     }
 
     .toast-stack {
       position: fixed;
-      bottom: 22px;
-      right: 22px;
+      bottom: 20px;
+      right: 20px;
       z-index: 950;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .toast-msg {
-      background: var(--bg-toolbar);
+      background: var(--cm-menu);
       color: var(--text-primary);
       border: 1px solid var(--border-strong);
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 999px;
       box-shadow: var(--shadow-md);
       font-size: 12.5px;
       font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      animation: fadeUp 0.22s var(--ease-out);
+      animation: fadeUp 0.2s var(--ease-out);
     }
-    .toast-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
 
-    /* Keyframes */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes cardPopIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes cardPopIn { from { opacity: 0; transform: translateY(10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-    @keyframes tabIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes menuPop { from { opacity: 0; transform: translateY(-6px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes floatStar { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.12) rotate(8deg); } }
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
     }
 
-    @media (max-width: 680px) {
-      .hide-mobile { display: none; }
+    @media (max-width: 640px) {
       .form-row-2 { grid-template-columns: 1fr; }
       .viewport-shell.split-active { flex-direction: column; }
       .secondary-pane { border-left: none; border-top: 2px solid var(--accent); }
-      .vinmeen-logo-text { font-size: 36px; }
-      .nav-group #btnBack, .nav-group #btnForward { display: none; }
-      .pill-btn { padding: 0 10px; font-size: 12px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- PIN Security Lock Overlay -->
+  <!-- PIN Lock Screen -->
   <div class="lock-overlay" id="lockOverlay">
     <div class="lock-card">
-      <div class="lock-icon-wrap">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
-      </div>
+      <div style="width:54px;height:54px;border-radius:16px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-size:24px;">🔒</div>
       <div>
-        <h3 style="font-size:19px;font-weight:700;">VinMeen Locked</h3>
-        <p style="font-size:12.5px;color:var(--text-secondary);margin-top:4px;">Enter your 4-digit PIN to unlock</p>
+        <h3 style="font-size:18px;font-weight:700;">VinMeen Locked</h3>
+        <p style="font-size:12px;color:var(--text-secondary);margin-top:3px;">Enter 4-digit PIN</p>
       </div>
       <div class="pin-dots" id="pinDotsWrap">
         <span class="pin-dot"></span><span class="pin-dot"></span><span class="pin-dot"></span><span class="pin-dot"></span>
@@ -982,73 +961,84 @@
     </div>
   </div>
 
-  <!-- 1. VINMEEN TAB STRIP -->
-  <header class="vinmeen-tab-strip" id="vinmeenTabStrip">
-    <div class="vm-tab home-tab active" data-tab-id="home">
-      <div class="tab-icon">✨</div>
-      <span class="tab-title">VinMeen</span>
+  <!-- CHROME HEADER (MOBILE + SYSTEM RESPONSIVE) -->
+  <header class="chrome-header">
+    <div class="header-inner">
+      <button type="button" class="cm-btn" id="btnHome" title="VinMeen Home">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </button>
+
+      <form class="cm-address-pill" id="omniboxForm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color:var(--text-secondary);flex-shrink:0;">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="omniboxInput" class="cm-address-input" placeholder="Search Google via VinMeen or type URL..." autocomplete="off" />
+        <button type="button" class="cm-reload-mini" id="btnReload" title="Reload">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+      </form>
+
+      <button type="button" class="cm-btn active" id="btnAddWebsite" title="Add Website">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+
+      <button type="button" class="cm-tab-counter" id="btnTabSwitcher" title="Open Tabs">1</button>
+
+      <button type="button" class="cm-btn" id="btnMoreMenu" title="More Options">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/>
+        </svg>
+      </button>
     </div>
-    <button type="button" class="new-tab-btn" id="plusTabBtn" title="New Tab">+</button>
   </header>
 
-  <!-- 2. VINMEEN TOOLBAR & OMNIBOX -->
-  <nav class="vinmeen-toolbar">
-    <div class="nav-group">
-      <button type="button" class="icon-round-btn" id="btnBack" title="Back">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      </button>
-      <button type="button" class="icon-round-btn" id="btnForward" title="Forward">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
-      <button type="button" class="icon-round-btn" id="btnReload" title="Reload">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-      </button>
-      <button type="button" class="icon-round-btn" id="btnHome" title="VinMeen Home">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-      </button>
+  <!-- Three-Dot Dropdown Menu -->
+  <div class="cm-dropdown" id="cmDropdown">
+    <button type="button" class="cm-menu-item" id="menuNewTab">
+      <span>New VinMeen Tab</span>
+      <span>+</span>
+    </button>
+    <button type="button" class="cm-menu-item" id="menuSplitView">
+      <span>Split Screen View</span>
+      <span id="menuSplitState">OFF</span>
+    </button>
+    <button type="button" class="cm-menu-item" id="menuThemeToggle">
+      <span>Dark / Light Theme</span>
+      <span>🌓</span>
+    </button>
+    <div class="cm-menu-divider"></div>
+    <button type="button" class="cm-menu-item" id="menuPinLock">
+      <span>PIN Security Lock</span>
+      <span>🔒</span>
+    </button>
+  </div>
+
+  <!-- Tab Switcher Overlay -->
+  <div class="tab-switcher-overlay" id="tabSwitcherOverlay">
+    <div class="switcher-top">
+      <span style="font-size:15px;font-weight:700;" id="switcherCountTitle">Open Tabs (1)</span>
+      <button type="button" class="pill-btn" id="btnCloseSwitcher">Done</button>
     </div>
-
-    <form class="omnibox-form" id="omniboxForm">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted);flex-shrink:0;"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="omniboxInput" class="omnibox-input" placeholder="Search VinMeen or enter website URL..." autocomplete="off" />
-    </form>
-
-    <div class="toolbar-right">
-      <button type="button" class="pill-btn primary" id="btnAddWebsite">
-        <span>+ Add</span>
-      </button>
-
-      <button type="button" class="icon-round-btn" id="btnSplitView" title="Split View">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="3" x2="12" y2="21"/></svg>
-      </button>
-
-      <button type="button" class="icon-round-btn hide-mobile" id="btnFullscreen" title="Fullscreen">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-      </button>
-
-      <button type="button" class="icon-round-btn" id="btnPinSettings" title="VinMeen PIN Lock">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </button>
-
-      <button type="button" class="icon-round-btn" id="btnThemeToggle" title="Switch Theme">
-        <svg id="iconSun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
-        <svg id="iconMoon" style="display:none;" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      </button>
+    <div class="switcher-grid" id="switcherGrid"></div>
+    <div class="switcher-bottom-bar">
+      <button type="button" class="pill-btn primary" id="switcherAddTabBtn">+ New Tab</button>
+      <button type="button" class="pill-btn" id="switcherCloseAllBtn" style="color:var(--danger);">Close All</button>
     </div>
-  </nav>
+  </div>
 
-  <!-- 3. BOOKMARKS BAR -->
+  <!-- Bookmarks Strip (Favorites) -->
   <div class="bookmarks-bar hidden" id="bookmarksBar"></div>
 
-  <!-- 4. BROWSER VIEWPORT -->
+  <!-- Main Viewport -->
   <main class="viewport-shell" id="viewportShell">
     <div class="primary-pane" id="primaryPane">
-      <div class="frame-banner" id="frameBanner">
-        <span>VinMeen In-App Browser • All websites open inside VinMeen.</span>
-        <button type="button" id="btnCloseBannerTab" style="background:none;border:none;color:var(--danger);font-weight:700;cursor:pointer;white-space:nowrap;">Close Tab</button>
-      </div>
-
-      <!-- VINMEEN DASHBOARD -->
+      <!-- VINMEEN HOME DASHBOARD -->
       <div class="dashboard-scroll" id="vinmeenDashboard">
         <div class="dashboard-inner">
           <div class="hero-section">
@@ -1057,14 +1047,20 @@
               <span class="c-blue">V</span><span class="c-red">i</span><span class="c-yellow">n</span><span class="c-blue">M</span><span class="c-green">e</span><span class="c-red">e</span><span class="c-yellow">n</span>
             </div>
 
-            <div class="clock-pill">
-              <span class="pulse-dot"></span>
-              <span id="liveClockText">Loading...</span>
+            <div class="status-row">
+              <div class="clock-pill">
+                <span class="pulse-dot" id="syncDot"></span>
+                <span id="syncStatusText">Local Storage Ready</span>
+              </div>
+              <div class="clock-pill">
+                <span class="pulse-dot"></span>
+                <span id="liveClockText">Loading...</span>
+              </div>
             </div>
 
             <div class="hero-search-wrap">
-              <svg class="hero-search-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input type="text" id="heroSearchInput" class="hero-search-input" placeholder="Search your websites or press Enter to search in VinMeen..." autocomplete="off" />
+              <svg class="hero-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="heroSearchInput" class="hero-search-input" placeholder="Search your websites or press Enter for Google search..." autocomplete="off" />
               <button type="button" id="heroSearchClear" class="hero-search-clear">✕</button>
             </div>
           </div>
@@ -1081,7 +1077,7 @@
           <!-- Filter Toolbar -->
           <div class="filter-toolbar" id="filterToolbar" style="display: none;">
             <div class="chips-group" id="chipsGroup"></div>
-            <span style="font-size:12px;color:var(--text-muted);" id="dragHintText">Drag cards to reorder</span>
+            <span style="font-size:11.5px;color:var(--text-muted);" id="dragHintLabel">Drag cards to reorder</span>
           </div>
 
           <!-- Added Websites Grid / Empty State -->
@@ -1107,8 +1103,8 @@
   <div class="modal-backdrop" id="siteModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="siteModalHeading" style="font-size:16.5px;">Add Website to VinMeen</h3>
-        <button type="button" class="icon-round-btn" id="btnCloseSiteModal">✕</button>
+        <h3 id="siteModalHeading" style="font-size:16px;">Add Website to VinMeen</h3>
+        <button type="button" class="cm-btn" id="btnCloseSiteModal">✕</button>
       </div>
       <form id="siteForm">
         <div class="modal-body">
@@ -1123,7 +1119,7 @@
           </div>
           <div class="form-row-2">
             <div class="form-field">
-              <label class="form-label" for="siteIconField">Website Icon (Emoji / URL)</label>
+              <label class="form-label" for="siteIconField">Icon (Emoji / URL)</label>
               <input type="text" id="siteIconField" class="form-input" placeholder="🎬 or image URL" />
             </div>
             <div class="form-field">
@@ -1139,7 +1135,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="pill-btn" id="btnCancelSiteModal">Cancel</button>
-          <button type="submit" class="pill-btn primary">Save Website</button>
+          <button type="submit" class="pill-btn primary">Save</button>
         </div>
       </form>
     </div>
@@ -1147,14 +1143,14 @@
 
   <!-- PIN Security Modal -->
   <div class="modal-backdrop" id="pinModal">
-    <div class="modal-box" style="max-width:350px;">
+    <div class="modal-box" style="max-width:340px;">
       <div class="modal-header">
-        <h3 style="font-size:16.5px;">VinMeen PIN Lock</h3>
-        <button type="button" class="icon-round-btn" id="btnClosePinModal">✕</button>
+        <h3 style="font-size:16px;">VinMeen PIN Lock</h3>
+        <button type="button" class="cm-btn" id="btnClosePinModal">✕</button>
       </div>
       <div class="modal-body">
         <p style="font-size:12.5px;color:var(--text-secondary);">Set a 4-digit PIN to lock VinMeen.</p>
-        <input type="password" id="pinField" class="form-input" maxlength="4" inputmode="numeric" placeholder="Enter 4 digits (e.g. 1234)" />
+        <input type="password" id="pinField" class="form-input" maxlength="4" inputmode="numeric" placeholder="Enter 4 digits" />
       </div>
       <div class="modal-footer">
         <button type="button" class="pill-btn" id="btnRemovePin" style="color:var(--danger);margin-right:auto;display:none;">Remove</button>
@@ -1166,13 +1162,13 @@
 
   <!-- Delete Confirmation Modal -->
   <div class="modal-backdrop" id="deleteModal">
-    <div class="modal-box" style="max-width:350px;">
+    <div class="modal-box" style="max-width:340px;">
       <div class="modal-header">
-        <h3 style="font-size:16.5px;">Delete Website</h3>
-        <button type="button" class="icon-round-btn" id="btnCloseDelModal">✕</button>
+        <h3 style="font-size:16px;">Delete Website</h3>
+        <button type="button" class="cm-btn" id="btnCloseDelModal">✕</button>
       </div>
       <div class="modal-body">
-        <p style="font-size:13px;color:var(--text-secondary);">Remove <strong id="delTargetName" style="color:var(--text-primary);"></strong> from VinMeen?</p>
+        <p style="font-size:13px;color:var(--text-secondary);">Delete <strong id="delTargetName" style="color:var(--text-primary);"></strong> from VinMeen?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="pill-btn" id="btnCancelDel">Cancel</button>
@@ -1185,7 +1181,21 @@
 
   <script>
     (() => {
-      // Dynamic PWA Manifest for Mobile Home Screen Icon
+      // ============================================================
+      // SUPABASE CLOUD CONFIG (Replace with your Supabase URL & Key)
+      // ============================================================
+      const SUPABASE_URL = 'https://vcigvxhzrslcllaouauv.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_vrwMGBS8HeK2uQUNKxi52g_OO7jCK3m';
+      const SUPABASE_TABLE = 'vinmeen_websites';
+
+      const sbClient = (
+        SUPABASE_URL.startsWith('https://') &&
+        SUPABASE_KEY.length > 20 &&
+        window.supabase &&
+        typeof window.supabase.createClient === 'function'
+      ) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+
+      // Mobile PWA Manifest with VinMeen Icon
       (function setupVinMeenManifest() {
         const iconSvg = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%231e293b'/%3E%3Cstop offset='100%25' stop-color='%230f172a'/%3E%3C/linearGradient%3E%3ClinearGradient id='star' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23fbbc05'/%3E%3Cstop offset='50%25' stop-color='%234285f4'/%3E%3Cstop offset='100%25' stop-color='%2334a853'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='115' fill='url(%23bg)'/%3E%3Cpath fill='url(%23star)' d='M256 96l42 118 118 42-118 42-42 118-42-118-118-42 118-42z'/%3E%3Ccircle cx='366' cy='146' r='18' fill='%23ea4335'/%3E%3C/svg%3E";
         const manifest = {
@@ -1193,8 +1203,8 @@
           short_name: 'VinMeen',
           start_url: '.',
           display: 'standalone',
-          background_color: '#111318',
-          theme_color: '#111318',
+          background_color: '#1f2024',
+          theme_color: '#1f2024',
           icons: [
             { src: iconSvg, sizes: '192x192', type: 'image/svg+xml', purpose: 'any maskable' },
             { src: iconSvg, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
@@ -1244,6 +1254,81 @@
       function persistSites() { localStorage.setItem(STORAGE.SITES, JSON.stringify(websites)); }
       function persistRecent() { localStorage.setItem(STORAGE.RECENT, JSON.stringify(recentVisits)); }
 
+      function updateSyncBadge() {
+        if (sbClient) {
+          $('syncDot').classList.remove('local');
+          $('syncStatusText').textContent = 'Supabase Sync Active';
+        } else {
+          $('syncDot').classList.add('local');
+          $('syncStatusText').textContent = 'Local Storage Ready';
+        }
+      }
+
+      // Supabase Cloud Sync
+      async function pullWebsitesFromSupabase() {
+        if (!sbClient) return;
+        try {
+          const { data, error } = await sbClient
+            .from(SUPABASE_TABLE)
+            .select('*')
+            .order('position', { ascending: true });
+
+          if (!error && Array.isArray(data)) {
+            websites = data.map(row => ({
+              id: String(row.id),
+              name: row.name || '',
+              url: row.url || '',
+              icon: row.icon || '',
+              category: row.category || '',
+              description: row.description || '',
+              favorite: Boolean(row.favorite)
+            }));
+            persistSites();
+            refreshDashboard();
+          }
+        } catch {}
+      }
+
+      async function saveWebsiteToSupabase(site, posIndex = 0) {
+        if (!sbClient || !site) return;
+        try {
+          await sbClient.from(SUPABASE_TABLE).upsert({
+            id: site.id,
+            name: site.name,
+            url: site.url,
+            icon: site.icon || '',
+            category: site.category || '',
+            description: site.description || '',
+            favorite: Boolean(site.favorite),
+            position: posIndex
+          });
+        } catch {}
+      }
+
+      async function removeWebsiteFromSupabase(siteId) {
+        if (!sbClient || !siteId) return;
+        try {
+          await sbClient.from(SUPABASE_TABLE).delete().eq('id', siteId);
+        } catch {}
+      }
+
+      async function syncOrderToSupabase() {
+        if (!sbClient || websites.length === 0) return;
+        try {
+          const rows = websites.map((site, idx) => ({
+            id: site.id,
+            name: site.name,
+            url: site.url,
+            icon: site.icon || '',
+            category: site.category || '',
+            description: site.description || '',
+            favorite: Boolean(site.favorite),
+            position: idx
+          }));
+          await sbClient.from(SUPABASE_TABLE).upsert(rows);
+        } catch {}
+      }
+
       function escapeHtml(value) {
         const div = document.createElement('div');
         div.textContent = value ?? '';
@@ -1258,16 +1343,17 @@
       function buildFaviconUrl(url) {
         try {
           const host = new URL(url).hostname;
-          return `https://icons.duckduckgo.com/ip3/${encodeURIComponent(host)}.ico`;
+          return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(host)}&sz=128`;
         } catch { return ''; }
       }
 
+      // Google-based URL & Search resolver (fast in-app loading)
       function resolveInputToUrl(raw) {
         const text = (raw || '').trim();
         if (!text) return '';
         if (/^https?:\/\//i.test(text)) return text;
         if (/^[^\s]+\.[^\s]{2,}$/.test(text) && !text.includes(' ')) return 'https://' + text;
-        return `https://duckduckgo.com/?q=${encodeURIComponent(text)}`;
+        return `https://www.google.com/search?igu=1&q=${encodeURIComponent(text)}`;
       }
 
       function renderSiteIcon(site) {
@@ -1286,19 +1372,20 @@
       function notify(message) {
         const el = document.createElement('div');
         el.className = 'toast-msg';
-        el.innerHTML = `<span class="toast-dot"></span><span>${escapeHtml(message)}</span>`;
+        el.textContent = message;
         $('toastStack').appendChild(el);
-        setTimeout(() => {
-          el.style.opacity = '0';
-          el.style.transform = 'translateY(8px)';
-          el.style.transition = 'all 0.2s ease';
-          setTimeout(() => el.remove(), 210);
-        }, 2000);
+        setTimeout(() => el.remove(), 1800);
       }
 
-      /* ============================================================
-         VINMEEN IN-APP TABS & BROWSER ENGINE
-         ============================================================ */
+      // ============================================================
+      // CHROME TABS & TAB SWITCHER
+      // ============================================================
+      function updateTabCounterBadge() {
+        const totalTabs = 1 + openTabs.length;
+        $('btnTabSwitcher').textContent = totalTabs;
+        $('switcherCountTitle').textContent = `Open Tabs (${totalTabs})`;
+      }
+
       function openVinMeenTab(rawUrl, title = '', siteId = null) {
         const url = resolveInputToUrl(rawUrl);
         if (!url) return;
@@ -1313,14 +1400,7 @@
         const tabId = 'tab_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
         const tabTitle = title || extractDomain(url);
 
-        openTabs.push({
-          id: tabId,
-          title: tabTitle,
-          url,
-          siteId,
-          history: [url],
-          historyIndex: 0
-        });
+        openTabs.push({ id: tabId, title: tabTitle, url, siteId });
 
         const frame = document.createElement('iframe');
         frame.className = 'web-iframe';
@@ -1337,7 +1417,6 @@
         const isHome = tabId === 'home';
 
         $('vinmeenDashboard').style.display = isHome ? 'flex' : 'none';
-        $('frameBanner').classList.toggle('show', !isHome);
 
         $('primaryPane').querySelectorAll('.web-iframe').forEach(frame => {
           frame.style.display = frame.dataset.tabId === tabId ? 'block' : 'none';
@@ -1350,7 +1429,7 @@
           if (tab) $('omniboxInput').value = tab.url;
         }
 
-        renderTabStrip();
+        updateTabCounterBadge();
       }
 
       function closeVinMeenTab(tabId) {
@@ -1365,85 +1444,69 @@
           const fallbackTab = openTabs[index] || openTabs[index - 1];
           activateTab(fallbackTab ? fallbackTab.id : 'home');
         } else {
-          renderTabStrip();
+          updateTabCounterBadge();
         }
       }
 
-      function renderTabStrip() {
-        const strip = $('vinmeenTabStrip');
-        const plusBtn = $('plusTabBtn');
-        strip.querySelectorAll('.vm-tab:not(.home-tab)').forEach(el => el.remove());
+      function renderTabSwitcherGrid() {
+        updateTabCounterBadge();
+        const grid = $('switcherGrid');
 
-        const homeTab = strip.querySelector('.home-tab');
-        homeTab.classList.toggle('active', activeTabId === 'home');
+        const homeCardHtml = `
+          <div class="switcher-card ${activeTabId === 'home' ? 'active-tab' : ''}" data-switch-id="home">
+            <div class="switcher-card-head">
+              <span>✨ VinMeen Home</span>
+            </div>
+            <div class="switcher-preview">✨</div>
+          </div>
+        `;
 
-        openTabs.forEach(tab => {
+        const webCardsHtml = openTabs.map(tab => {
           const site = tab.siteId ? websites.find(s => s.id === tab.siteId) : null;
           const iconHtml = site
             ? renderSiteIcon(site)
             : `<img src="${escapeHtml(buildFaviconUrl(tab.url))}" alt="" onerror="this.style.display='none';" />`;
 
-          const el = document.createElement('div');
-          el.className = `vm-tab ${tab.id === activeTabId ? 'active' : ''}`;
-          el.innerHTML = `
-            <div class="tab-icon">${iconHtml}</div>
-            <span class="tab-title" title="${escapeHtml(tab.url)}">${escapeHtml(tab.title)}</span>
-            <button type="button" class="tab-close-btn" title="Close Tab">✕</button>
+          return `
+            <div class="switcher-card ${activeTabId === tab.id ? 'active-tab' : ''}" data-switch-id="${tab.id}">
+              <div class="switcher-card-head">
+                <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escapeHtml(tab.title)}</span>
+                <button type="button" class="tab-close-mini" data-close-tab="${tab.id}">✕</button>
+              </div>
+              <div class="switcher-preview">${iconHtml}</div>
+            </div>
           `;
+        }).join('');
 
-          el.addEventListener('click', e => {
-            if (e.target.closest('.tab-close-btn')) closeVinMeenTab(tab.id);
-            else activateTab(tab.id);
+        grid.innerHTML = homeCardHtml + webCardsHtml;
+
+        grid.querySelectorAll('.switcher-card').forEach(card => {
+          const targetId = card.dataset.switchId;
+          card.addEventListener('click', e => {
+            const closeBtn = e.target.closest('[data-close-tab]');
+            if (closeBtn) {
+              closeVinMeenTab(closeBtn.dataset.closeTab);
+              renderTabSwitcherGrid();
+              return;
+            }
+            activateTab(targetId);
+            $('tabSwitcherOverlay').classList.remove('open');
           });
-
-          strip.insertBefore(el, plusBtn);
         });
       }
 
-      $('vinmeenTabStrip').querySelector('.home-tab').addEventListener('click', () => activateTab('home'));
+      // Header Controls
       $('btnHome').addEventListener('click', () => activateTab('home'));
-
-      $('plusTabBtn').addEventListener('click', () => {
-        activateTab('home');
-        $('heroSearchInput').focus();
-      });
 
       $('btnReload').addEventListener('click', () => {
         if (activeTabId === 'home') {
+          pullWebsitesFromSupabase();
           refreshDashboard();
-          notify('VinMeen refreshed');
+          notify('Refreshed');
           return;
         }
         const frame = $('primaryPane').querySelector(`.web-iframe[data-tab-id="${activeTabId}"]`);
         if (frame) frame.src = frame.src;
-      });
-
-      $('btnBack').addEventListener('click', () => {
-        if (activeTabId === 'home') return;
-        const tab = openTabs.find(t => t.id === activeTabId);
-        if (tab && tab.historyIndex > 0) {
-          tab.historyIndex--;
-          tab.url = tab.history[tab.historyIndex];
-          tab.title = extractDomain(tab.url);
-          const frame = $('primaryPane').querySelector(`.web-iframe[data-tab-id="${activeTabId}"]`);
-          if (frame) frame.src = tab.url;
-          $('omniboxInput').value = tab.url;
-          renderTabStrip();
-        }
-      });
-
-      $('btnForward').addEventListener('click', () => {
-        if (activeTabId === 'home') return;
-        const tab = openTabs.find(t => t.id === activeTabId);
-        if (tab && tab.historyIndex < tab.history.length - 1) {
-          tab.historyIndex++;
-          tab.url = tab.history[tab.historyIndex];
-          tab.title = extractDomain(tab.url);
-          const frame = $('primaryPane').querySelector(`.web-iframe[data-tab-id="${activeTabId}"]`);
-          if (frame) frame.src = tab.url;
-          $('omniboxInput').value = tab.url;
-          renderTabStrip();
-        }
       });
 
       $('omniboxForm').addEventListener('submit', e => {
@@ -1454,36 +1517,69 @@
         if (activeTabId !== 'home') {
           const tab = openTabs.find(t => t.id === activeTabId);
           if (tab) {
-            tab.history = tab.history.slice(0, tab.historyIndex + 1);
-            tab.history.push(url);
-            tab.historyIndex = tab.history.length - 1;
             tab.url = url;
             tab.title = extractDomain(url);
             const frame = $('primaryPane').querySelector(`.web-iframe[data-tab-id="${activeTabId}"]`);
             if (frame) frame.src = url;
-            renderTabStrip();
             return;
           }
         }
         openVinMeenTab(url);
       });
 
-      $('btnCloseBannerTab').addEventListener('click', () => {
-        if (activeTabId !== 'home') closeVinMeenTab(activeTabId);
+      $('btnTabSwitcher').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
+        renderTabSwitcherGrid();
+        $('tabSwitcherOverlay').classList.add('open');
       });
 
-      // Split View
-      $('btnSplitView').addEventListener('click', () => {
+      $('btnCloseSwitcher').addEventListener('click', () => {
+        $('tabSwitcherOverlay').classList.remove('open');
+      });
+
+      $('switcherAddTabBtn').addEventListener('click', () => {
+        $('tabSwitcherOverlay').classList.remove('open');
+        activateTab('home');
+        $('heroSearchInput').focus();
+      });
+
+      $('switcherCloseAllBtn').addEventListener('click', () => {
+        openTabs = [];
+        $('primaryPane').querySelectorAll('.web-iframe').forEach(f => f.remove());
+        activateTab('home');
+        renderTabSwitcherGrid();
+      });
+
+      // Three-Dot Dropdown Menu
+      $('btnMoreMenu').addEventListener('click', e => {
+        e.stopPropagation();
+        $('cmDropdown').classList.toggle('open');
+      });
+
+      document.addEventListener('click', e => {
+        if (!e.target.closest('#cmDropdown') && !e.target.closest('#btnMoreMenu')) {
+          $('cmDropdown').classList.remove('open');
+        }
+      });
+
+      $('menuNewTab').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
+        activateTab('home');
+        $('heroSearchInput').focus();
+      });
+
+      $('menuSplitView').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
         isSplitMode = !isSplitMode;
         $('viewportShell').classList.toggle('split-active', isSplitMode);
-        $('btnSplitView').classList.toggle('active', isSplitMode);
+        $('menuSplitState').textContent = isSplitMode ? 'ON' : 'OFF';
         syncSplitDropdown();
       });
 
       $('btnCloseSplit').addEventListener('click', () => {
         isSplitMode = false;
         $('viewportShell').classList.remove('split-active');
-        $('btnSplitView').classList.remove('active');
+        $('menuSplitState').textContent = 'OFF';
       });
 
       $('splitSelect').addEventListener('change', e => {
@@ -1498,18 +1594,24 @@
         select.value = current;
       }
 
-      // Fullscreen
-      $('btnFullscreen').addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(() => {});
-        } else {
-          document.exitFullscreen().catch(() => {});
-        }
+      $('menuThemeToggle').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(next);
       });
 
-      /* ============================================================
-         BOOKMARKS BAR (FAVORITES)
-         ============================================================ */
+      $('menuPinLock').addEventListener('click', () => {
+        $('cmDropdown').classList.remove('open');
+        const hasPin = Boolean(getSavedPin());
+        $('pinField').value = '';
+        $('btnRemovePin').style.display = hasPin ? 'inline-flex' : 'none';
+        $('btnLockNow').style.display = hasPin ? 'inline-flex' : 'none';
+        $('pinModal').classList.add('open');
+      });
+
+      // ============================================================
+      // BOOKMARKS BAR (FAVORITES)
+      // ============================================================
       function renderBookmarks() {
         const strip = $('bookmarksBar');
         const favorites = websites.filter(s => s.favorite);
@@ -1520,13 +1622,13 @@
         }
         strip.classList.remove('hidden');
         strip.innerHTML = favorites.map(site => `
-          <div class="bookmark-pill" data-id="${site.id}" title="${escapeHtml(site.url)}">
-            <div class="bookmark-icon">${renderSiteIcon(site)}</div>
+          <div class="bookmark-chip" data-id="${site.id}" title="${escapeHtml(site.url)}">
+            <div class="bookmark-fav">${renderSiteIcon(site)}</div>
             <span>${escapeHtml(site.name)}</span>
           </div>
         `).join('');
 
-        strip.querySelectorAll('.bookmark-pill').forEach(chip => {
+        strip.querySelectorAll('.bookmark-chip').forEach(chip => {
           chip.addEventListener('click', () => {
             const site = websites.find(s => s.id === chip.dataset.id);
             if (site) openVinMeenTab(site.url, site.name, site.id);
@@ -1534,9 +1636,9 @@
         });
       }
 
-      /* ============================================================
-         DASHBOARD GRID, RECENT & FILTERS
-         ============================================================ */
+      // ============================================================
+      // DASHBOARD GRID, RECENT & FILTERS
+      // ============================================================
       function logRecentVisit(siteId) {
         if (!websites.some(s => s.id === siteId)) return;
         recentVisits = recentVisits.filter(r => r.siteId !== siteId);
@@ -1610,13 +1712,11 @@
           $('websitesStage').innerHTML = `
             <div class="empty-state">
               <div class="empty-badge">✨</div>
-              <h2 style="font-size:21px;font-weight:700;">Welcome to VinMeen</h2>
-              <p style="color:var(--text-secondary);font-size:13.5px;max-width:420px;">
-                Only websites you manually add appear here. Click below to add your first website to VinMeen.
+              <h2 style="font-size:20px;font-weight:700;">Welcome to VinMeen</h2>
+              <p style="color:var(--text-secondary);font-size:13px;max-width:390px;">
+                Only websites you manually add appear here. Tap below to add your first website.
               </p>
-              <button type="button" class="pill-btn primary" id="btnEmptyAdd" style="height:40px;padding:0 22px;font-size:13.5px;">
-                + Add Your First Website
-              </button>
+              <button type="button" class="pill-btn primary" id="btnEmptyAdd">+ Add Your First Website</button>
             </div>
           `;
           $('btnEmptyAdd').addEventListener('click', () => openSiteModal());
@@ -1642,18 +1742,18 @@
 
         if (filtered.length === 0) {
           $('websitesStage').innerHTML = `
-            <div class="empty-state" style="padding:38px 20px;">
-              <p style="color:var(--text-secondary);font-size:13.5px;">No matching websites in VinMeen. Press Enter in search bar to search inside VinMeen.</p>
+            <div class="empty-state" style="padding:34px 18px;">
+              <p style="color:var(--text-secondary);font-size:13px;">No matching websites. Press Enter for Google search inside VinMeen.</p>
             </div>
           `;
           return;
         }
 
         const canDrag = currentCategory === 'All' && !q;
-        $('dragHintText').style.visibility = canDrag ? 'visible' : 'hidden';
+        $('dragHintLabel').style.visibility = canDrag ? 'visible' : 'hidden';
 
-        $('websitesStage').innerHTML = `<div class="websites-grid">${filtered.map((site, idx) => `
-          <article class="site-card" data-id="${site.id}" draggable="${canDrag}" style="animation-delay:${Math.min(idx * 0.03, 0.24)}s;">
+        $('websitesStage').innerHTML = `<div class="websites-grid">${filtered.map(site => `
+          <article class="site-card" data-id="${site.id}" draggable="${canDrag}">
             <div>
               <div class="card-top">
                 <div class="card-brand">
@@ -1669,11 +1769,11 @@
                   <button type="button" class="card-tool-btn delete-btn" data-action="delete" title="Delete">✕</button>
                 </div>
               </div>
-              <p class="card-desc" style="margin-top:11px;">${escapeHtml((site.description || '').trim() || 'Click Open in VinMeen to launch inside tab.')}</p>
+              <p class="card-desc" style="margin-top:10px;">${escapeHtml((site.description || '').trim() || 'Tap Open to launch inside VinMeen.')}</p>
             </div>
             <div class="card-footer">
               <span class="cat-tag">${escapeHtml((site.category || '').trim() || 'General')}</span>
-              <button type="button" class="open-in-btn" data-action="open">Open in VinMeen</button>
+              <button type="button" class="open-in-btn" data-action="open">Open</button>
             </div>
           </article>
         `).join('')}</div>`;
@@ -1692,8 +1792,10 @@
             if (!site) return;
             site.favorite = !site.favorite;
             persistSites();
+            const pos = websites.findIndex(s => s.id === id);
+            saveWebsiteToSupabase(site, pos);
             refreshDashboard();
-            notify(site.favorite ? 'Pinned to VinMeen Bookmarks' : 'Removed from Bookmarks');
+            notify(site.favorite ? 'Added to Bookmarks' : 'Removed from Bookmarks');
           });
 
           card.querySelector('[data-action="edit"]').addEventListener('click', e => {
@@ -1714,7 +1816,6 @@
             if (site) openVinMeenTab(site.url, site.name, site.id);
           });
 
-          // Drag & Drop Reordering
           card.addEventListener('dragstart', e => {
             if (card.getAttribute('draggable') !== 'true') { e.preventDefault(); return; }
             draggedSiteId = id;
@@ -1744,6 +1845,7 @@
               const [movedItem] = websites.splice(fromIndex, 1);
               websites.splice(toIndex, 0, movedItem);
               persistSites();
+              syncOrderToSupabase();
               refreshDashboard();
               notify('Order saved');
             }
@@ -1782,12 +1884,10 @@
         recentVisits = [];
         persistRecent();
         renderRecentStrip();
-        notify('Recently visited cleared');
+        notify('History cleared');
       });
 
-      /* ============================================================
-         ADD / EDIT / DELETE MODALS
-         ============================================================ */
+      // Add / Edit / Delete Modals
       function openSiteModal(siteId = null) {
         $('siteForm').reset();
         if (siteId) {
@@ -1805,7 +1905,7 @@
           $('siteIdField').value = '';
         }
         $('siteModal').classList.add('open');
-        setTimeout(() => $('siteNameField').focus(), 25);
+        setTimeout(() => $('siteNameField').focus(), 20);
       }
 
       $('btnAddWebsite').addEventListener('click', () => openSiteModal());
@@ -1823,17 +1923,23 @@
         const description = $('siteDescField').value.trim();
 
         try { new URL(url); }
-        catch { notify('Please enter a valid website URL'); return; }
+        catch { notify('Enter a valid URL'); return; }
 
         if (id) {
           const target = websites.find(s => s.id === id);
-          if (target) Object.assign(target, { name, url, icon, category, description });
+          if (target) {
+            Object.assign(target, { name, url, icon, category, description });
+            const pos = websites.findIndex(s => s.id === id);
+            saveWebsiteToSupabase(target, pos);
+          }
           notify(`Updated "${name}"`);
         } else {
-          websites.unshift({
+          const newSite = {
             id: 'site_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
             name, url, icon, category, description, favorite: false
-          });
+          };
+          websites.unshift(newSite);
+          saveWebsiteToSupabase(newSite, 0);
           notify(`Added "${name}"`);
         }
 
@@ -1846,19 +1952,19 @@
       $('btnCancelDel').addEventListener('click', () => $('deleteModal').classList.remove('open'));
       $('btnConfirmDel').addEventListener('click', () => {
         if (!deleteTargetId) return;
-        websites = websites.filter(s => s.id !== deleteTargetId);
-        recentVisits = recentVisits.filter(r => r.siteId !== deleteTargetId);
+        const targetId = deleteTargetId;
+        websites = websites.filter(s => s.id !== targetId);
+        recentVisits = recentVisits.filter(r => r.siteId !== targetId);
         persistSites();
         persistRecent();
+        removeWebsiteFromSupabase(targetId);
         deleteTargetId = null;
         $('deleteModal').classList.remove('open');
         refreshDashboard();
-        notify('Website deleted');
+        notify('Deleted');
       });
 
-      /* ============================================================
-         PIN SECURITY LOCK
-         ============================================================ */
+      // PIN Lock
       function getSavedPin() { return localStorage.getItem(STORAGE.PIN) || ''; }
 
       function activateLockScreen() {
@@ -1889,25 +1995,15 @@
           renderPinDots();
           if (pinBuffer.length === 4) {
             if (pinBuffer === getSavedPin()) {
-              setTimeout(() => {
-                $('lockOverlay').classList.remove('active');
-                pinBuffer = '';
-                renderPinDots();
-              }, 120);
+              $('lockOverlay').classList.remove('active');
+              pinBuffer = '';
+              renderPinDots();
             } else {
               renderPinDots(true);
-              setTimeout(() => { pinBuffer = ''; renderPinDots(); }, 360);
+              setTimeout(() => { pinBuffer = ''; renderPinDots(); }, 320);
             }
           }
         }
-      });
-
-      $('btnPinSettings').addEventListener('click', () => {
-        const hasPin = Boolean(getSavedPin());
-        $('pinField').value = '';
-        $('btnRemovePin').style.display = hasPin ? 'inline-flex' : 'none';
-        $('btnLockNow').style.display = hasPin ? 'inline-flex' : 'none';
-        $('pinModal').classList.add('open');
       });
 
       $('btnClosePinModal').addEventListener('click', () => $('pinModal').classList.remove('open'));
@@ -1918,34 +2014,25 @@
 
       $('btnSavePin').addEventListener('click', () => {
         const val = $('pinField').value.trim();
-        if (!/^\d{4}$/.test(val)) { notify('Please enter a valid 4-digit PIN'); return; }
+        if (!/^\d{4}$/.test(val)) { notify('Enter 4 digits'); return; }
         localStorage.setItem(STORAGE.PIN, val);
         $('pinModal').classList.remove('open');
-        notify('4-Digit PIN Lock enabled');
+        notify('PIN Lock ON');
       });
 
       $('btnRemovePin').addEventListener('click', () => {
         localStorage.removeItem(STORAGE.PIN);
         $('pinModal').classList.remove('open');
-        notify('PIN Lock removed');
+        notify('PIN Lock OFF');
       });
 
-      /* ============================================================
-         THEME & LIVE CLOCK
-         ============================================================ */
+      // Theme & Clock
       function applyTheme(theme) {
         document.documentElement.setAttribute('data-theme', theme);
         localStorage.setItem(STORAGE.THEME, theme);
         const metaTheme = document.querySelector('meta[name="theme-color"]');
-        if (metaTheme) metaTheme.setAttribute('content', theme === 'dark' ? '#111318' : '#e2e8f0');
-        $('iconSun').style.display = theme === 'dark' ? 'block' : 'none';
-        $('iconMoon').style.display = theme === 'dark' ? 'none' : 'block';
+        if (metaTheme) metaTheme.setAttribute('content', theme === 'dark' ? '#1f2024' : '#ffffff');
       }
-
-      $('btnThemeToggle').addEventListener('click', () => {
-        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-        applyTheme(next);
-      });
 
       function tickLiveClock() {
         const now = new Date();
@@ -1954,19 +2041,14 @@
         $('liveClockText').textContent = `${date}  •  ${time}`;
       }
 
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') {
-          $('siteModal').classList.remove('open');
-          $('pinModal').classList.remove('open');
-          $('deleteModal').classList.remove('open');
-        }
-      });
-
       // Boot VinMeen
       applyTheme(localStorage.getItem(STORAGE.THEME) || 'dark');
+      updateSyncBadge();
+      updateTabCounterBadge();
       tickLiveClock();
       setInterval(tickLiveClock, 1000);
       refreshDashboard();
+      pullWebsitesFromSupabase();
 
       if (getSavedPin()) {
         activateLockScreen();
